@@ -7,6 +7,7 @@ import com.mehmetpekdemir.customer.service.adapter.rest.request.CreateCustomerRe
 import com.mehmetpekdemir.customer.service.adapter.rest.response.RetrieveCustomerOrdersResponse;
 import com.mehmetpekdemir.customer.service.domain.enumtype.CustomerStatus;
 import com.mehmetpekdemir.customer.service.infrastructure.BaseIT;
+import com.mehmetpekdemir.customer.service.infrastructure.util.UidGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +30,7 @@ class CustomerControllerIT extends BaseIT {
         CreateCustomerRequest request = CreateCustomerRequest.builder()
                 .firstName("Mehmet")
                 .lastName("Pekdemir")
-                .email("mehmetpekdemir06@hotmail.com")
+                .email(UidGenerator.generateUid() + "@hotmail.com")
                 .password("password")
                 .confirmPassword("password")
                 .build();
@@ -46,7 +47,7 @@ class CustomerControllerIT extends BaseIT {
         CustomerDocument customerDocument = customerDocumentOptional.get();
         assertThat(customerDocument.getFirstName()).isEqualTo("Mehmet");
         assertThat(customerDocument.getLastName()).isEqualTo("Pekdemir");
-        assertThat(customerDocument.getEmail()).isEqualTo("mehmetpekdemir06@hotmail.com");
+        assertThat(customerDocument.getEmail()).isNotNull();
         assertThat(customerDocument.getPassword()).isEqualTo("password");
         assertThat(customerDocument.getStatus()).isEqualTo(CustomerStatus.ACTIVE);
 
