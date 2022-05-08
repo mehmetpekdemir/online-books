@@ -27,10 +27,12 @@ class CustomerControllerIT extends BaseIT {
     @Test
     void should_create_customer() {
         //given
+        String email = UidGenerator.generateUid() + "@hotmail.com";
+
         CreateCustomerRequest request = CreateCustomerRequest.builder()
                 .firstName("Mehmet")
                 .lastName("Pekdemir")
-                .email(UidGenerator.generateUid() + "@hotmail.com")
+                .email(email)
                 .password("password")
                 .confirmPassword("password")
                 .build();
@@ -41,13 +43,13 @@ class CustomerControllerIT extends BaseIT {
         //then
         assertThat(result.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
 
-        Optional<CustomerDocument> customerDocumentOptional = customerMongoRepository.findByEmail("mehmetpekdemir06@hotmail.com");
+        Optional<CustomerDocument> customerDocumentOptional = customerMongoRepository.findByEmail(email);
         assertThat(customerDocumentOptional).isNotNull();
 
         CustomerDocument customerDocument = customerDocumentOptional.get();
         assertThat(customerDocument.getFirstName()).isEqualTo("Mehmet");
         assertThat(customerDocument.getLastName()).isEqualTo("Pekdemir");
-        assertThat(customerDocument.getEmail()).isNotNull();
+        assertThat(customerDocument.getEmail()).isEqualTo(email);
         assertThat(customerDocument.getPassword()).isEqualTo("password");
         assertThat(customerDocument.getStatus()).isEqualTo(CustomerStatus.ACTIVE);
 
