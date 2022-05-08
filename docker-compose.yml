@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:4.4.3
+    container_name: book
+    restart: always
+    ports:
+      - '27020:27017'

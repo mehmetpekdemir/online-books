@@ -1,0 +1,29 @@
+server:
+  port: 8505
+
+spring:
+  application:
+    name: statistics-service
+  boot:
+    admin:
+      client:
+        url: http://localhost:8508
+  data:
+    mongodb:
+      host: localhost
+      port: 27020
+      database: statistics
+      auto-index-creation: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+eureka:
+  client:
+    instance:
+      hostname: localhost
+    serviceUrl:
+      defaultZone: http://localhost:8500/eureka/
