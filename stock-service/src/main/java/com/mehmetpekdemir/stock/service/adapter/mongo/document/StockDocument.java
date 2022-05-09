@@ -32,12 +32,4 @@ public class StockDocument {
         stockDocument.setAmount(command.getAmount());
         return stockDocument;
     }
-
-    public Stock toModel() {
-        return Stock.builder()
-                .stockUid(uid)
-                .bookUid(bookUid)
-                .amount(amount)
-                .build();
-    }
 }
