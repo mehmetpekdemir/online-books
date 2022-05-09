@@ -1,0 +1,380 @@
+{
+	"info": {
+		"_postman_id": "c68c15c1-6217-4ef7-8fb0-0b6441ac1be6",
+		"name": "online-books",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "customer-service",
+			"item": [
+				{
+					"name": "Customer Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mehmetpekdemir@hotmail.com\",\r\n    \"password\":\"123456\",\r\n    \"confirmPassword\":\"123456\",\r\n    \"firstName\":\"Mehmet\",\r\n    \"lastName\":\"Pekdemir\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8501/api/v1/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8501",
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Customer Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8501/api/v1/customers/255ea75a-3ba4-40f7-bd15-791611654032/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8501",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"255ea75a-3ba4-40f7-bd15-791611654032",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order-service",
+			"item": [
+				{
+					"name": "internal",
+					"item": [
+						{
+							"name": "Retrieve customer orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8503/api/v1/internal/customers/255ea75a-3ba4-40f7-bd15-791611654032/orders?page=0&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8503",
+									"path": [
+										"api",
+										"v1",
+										"internal",
+										"customers",
+										"255ea75a-3ba4-40f7-bd15-791611654032",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrieve customer orders statistics",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8503/api/v1/internal/customers/255ea75a-3ba4-40f7-bd15-791611654032/statistics/from/2022-05-01T00:00:00/to/2022-06-01T00:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8503",
+									"path": [
+										"api",
+										"v1",
+										"internal",
+										"customers",
+										"255ea75a-3ba4-40f7-bd15-791611654032",
+										"statistics",
+										"from",
+										"2022-05-01T00:00:00",
+										"to",
+										"2022-06-01T00:00:00"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Place Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerUid\": \"255ea75a-3ba4-40f7-bd15-791611654032\",\r\n    \"bookUid\": \"b2a65ac5-9759-4b7a-8d66-4515a7259d2b\",\r\n    \"amount\": 1,\r\n    \"totalPrice\": 170.25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8503/api/v1/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8503",
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve order by order uid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerUid\": \"123456\",\r\n    \"bookUid\": \"123456\",\r\n    \"amount\": 4,\r\n    \"totalPrice\": 100.25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8503/api/v1/orders/843cfe0b-4d85-4416-bc9e-4ea96fd296f7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8503",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"843cfe0b-4d85-4416-bc9e-4ea96fd296f7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve order by order uid Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerUid\": \"123456\",\r\n    \"bookUid\": \"123456\",\r\n    \"amount\": 4,\r\n    \"totalPrice\": 100.25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8503/api/v1/orders/from/2022-04-08T18:17:27/to/2022-05-08T22:17:27",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8503",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"from",
+								"2022-04-08T18:17:27",
+								"to",
+								"2022-05-08T22:17:27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "book-service",
+			"item": [
+				{
+					"name": "Create Book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isbn\": \"1234567\",\r\n    \"name\": \"Uçurtma Avcısı2\",\r\n    \"description\": \"Afganistan doğumlu Amerikalı yazar Khaled Hosseini'nin ilk romanıdır. Kitapta dostluk, arkadaşlık, sevgi, ihanet, barış temalarına değinilmiştir. 2003 yılında yayımlanan kitap, bir Afgan tarafından İngilizce yazılmış ilk romandır.\",\r\n    \"authorName\": \"Halid Hüseyni\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8502/api/v1/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8502",
+							"path": [
+								"api",
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book Stock",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookUid\": \"b2a65ac5-9759-4b7a-8d66-4515a7259d2b\",\r\n    \"amount\": 11\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8502/api/v1/books/stock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8502",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"stock"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stock-service",
+			"item": [
+				{
+					"name": "internal",
+					"item": [
+						{
+							"name": "Update Book Stock",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookUid\": \"5e4bd932-bcad-444f-bcb5-da7994516fbc\",\r\n    \"amount\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8504/api/v1/internal/books/stock",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8504",
+									"path": [
+										"api",
+										"v1",
+										"internal",
+										"books",
+										"stock"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "statistics-service",
+			"item": [
+				{
+					"name": "Retrieve Customer Order Statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8505/api/v1/customers/255ea75a-3ba4-40f7-bd15-791611654032/statistics/from/2022-05-01T00:00:00/to/2022-06-01T00:00:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8505",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"255ea75a-3ba4-40f7-bd15-791611654032",
+								"statistics",
+								"from",
+								"2022-05-01T00:00:00",
+								"to",
+								"2022-06-01T00:00:00"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
