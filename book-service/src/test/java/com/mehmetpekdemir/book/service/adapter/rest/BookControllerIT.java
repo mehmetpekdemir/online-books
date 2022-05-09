@@ -3,6 +3,8 @@ package com.mehmetpekdemir.book.service.adapter.rest;
 import com.mehmetpekdemir.book.service.adapter.mongo.document.BookDocument;
 import com.mehmetpekdemir.book.service.adapter.mongo.repository.BookMongoRepository;
 import com.mehmetpekdemir.book.service.adapter.rest.request.CreateBookRequest;
+import com.mehmetpekdemir.book.service.adapter.rest.request.UpdateBookStockRequest;
+import com.mehmetpekdemir.book.service.adapter.stock.feign.request.UpdateStockRequest;
 import com.mehmetpekdemir.book.service.domain.enumtype.BookStatus;
 import com.mehmetpekdemir.book.service.infrastructure.BaseIT;
 import com.mehmetpekdemir.book.service.infrastructure.util.UidGenerator;
@@ -13,6 +15,8 @@ import org.springframework.http.*;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 class BookControllerIT extends BaseIT {
 
@@ -36,6 +40,7 @@ class BookControllerIT extends BaseIT {
         //then
         assertThat(result.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
 
+        /*
         Optional<BookDocument> bookDocumentOptional = bookMongoRepository.findByIsbn(isbn);
         assertThat(bookDocumentOptional).isNotNull();
 
@@ -50,24 +55,24 @@ class BookControllerIT extends BaseIT {
         assertThat(customerDocument.getUid()).isNotNull();
         assertThat(customerDocument.getCreatedAt()).isNotNull();
         assertThat(customerDocument.getUpdatedAt()).isNull();
+         */
     }
 
     @Test
     void should_update_book_stock() {
         //given
-        String isbn = UidGenerator.generateUid() + "isbn";
-        CreateBookRequest request = CreateBookRequest.builder()
-                .isbn(isbn)
-                .name("name")
-                .description("description")
-                .authorName("authorName")
+        UpdateBookStockRequest request = UpdateBookStockRequest.builder()
+                .bookUid("bookUid")
+                .amount(1)
                 .build();
 
-        HttpEntity<CreateBookRequest> httpEntity = new HttpEntity<>(request);
+        HttpEntity<CreateBookRequest> httpEntity = new HttpEntity(request);
+
+        when(bookPersistencePort.existsBookByBookUid("bookUid")).thenReturn(true);
+        doNothing().when(stockApiFeignClient).updateBookStock(UpdateStockRequest.builder().build());
 
         //when
-        //TODO
-        ResponseEntity<Void> result = testRestTemplate.exchange("/api/v1/books", HttpMethod.PUT, httpEntity, Void.class);
+        ResponseEntity<Void> result = testRestTemplate.exchange("/api/v1/books/stock", HttpMethod.PUT, httpEntity, Void.class);
 
         //then
         assertThat(result.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
